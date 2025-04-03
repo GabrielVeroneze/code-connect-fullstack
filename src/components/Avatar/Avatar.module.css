@@ -1,0 +1,19 @@
+.container {
+    align-items: center;
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.5rem 0;
+    width: max-content;
+}
+
+.imagem {
+    height: 32px;
+    width: 32px;
+}
+
+.nome {
+    color: #888888;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    line-height: 22.5px;
+}

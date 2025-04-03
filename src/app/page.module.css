@@ -1,0 +1,27 @@
+.principal {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 3.5rem;
+}
+
+.posts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: space-between;
+}
+
+.links {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.link {
+    color: #bfffc3;
+    font-size: 1.125rem;
+    font-weight: 400;
+    line-height: 150%;
+    text-decoration: underline;
+    text-decoration-thickness: 0%;
+}
