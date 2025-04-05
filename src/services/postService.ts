@@ -1,16 +1,25 @@
 import html from 'remark-html'
+import db from '@prisma/db'
 import logger from '@/utils/logger'
 import { remark } from 'remark'
 import { PaginatedPosts } from '@/types/PaginatedPosts'
 import { Post } from '@/types/Post'
 
 export async function getAllPosts(page: number): Promise<PaginatedPosts> {
-    const response = await fetch(
-        `http://localhost:3042/posts?_page=${page}&_per_page=6`
-    )
+    try {
+        const posts = await db.post.findMany()
 
-    if (!response.ok) {
-        logger.error('Ops, alguma coisa deu errado')
+        return {
+            first: 1,
+            prev: null,
+            next: null,
+            last: 1,
+            pages: 1,
+            items: 0,
+            data: posts,
+        }
+    } catch (error) {
+        logger.error('Falha ao obter posts', { error })
 
         return {
             first: 1,
@@ -22,10 +31,6 @@ export async function getAllPosts(page: number): Promise<PaginatedPosts> {
             data: [],
         }
     }
-
-    logger.info('Posts obtidos com sucesso')
-
-    return response.json()
 }
 
 export async function getPostBySlug(slug: string): Promise<Post | null> {
