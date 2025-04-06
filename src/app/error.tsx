@@ -19,7 +19,7 @@ const Error = ({ error }: ErrorProps) => {
         <main className={styles.principal}>
             <Image
                 className={styles.imagem}
-                src="/images/error-500.png"
+                src="/images/errors/error-500.png"
                 alt="Robô verde sentado, pensando, com fundo desfocado verde"
                 height={367}
                 width={656}
