@@ -7,7 +7,11 @@ import { Post } from '@/types/Post'
 
 export async function getAllPosts(page: number): Promise<PaginatedPosts> {
     try {
+        const perPage = 6
+
         const posts = await db.post.findMany({
+            take: perPage,
+            orderBy: { createdAt: 'desc' },
             include: {
                 author: true,
             },
