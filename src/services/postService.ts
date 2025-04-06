@@ -8,36 +8,28 @@ import { Post } from '@/types/Post'
 export async function getAllPosts(page: number): Promise<PaginatedPosts> {
     try {
         const perPage = 6
+        const skip = (page - 1) * perPage
+
+        const totalItems = await db.post.count()
+        const totalPages = Math.ceil(totalItems / perPage)
+
+        const prev = page > 1 ? page - 1 : null
+        const next = page < totalPages ? page + 1 : null
 
         const posts = await db.post.findMany({
             take: perPage,
+            skip: skip,
             orderBy: { createdAt: 'desc' },
             include: {
                 author: true,
             },
         })
 
-        return {
-            first: 1,
-            prev: null,
-            next: null,
-            last: 1,
-            pages: 1,
-            items: 0,
-            data: posts,
-        }
+        return { data: posts, prev, next }
     } catch (error) {
         logger.error('Falha ao obter posts', { error })
 
-        return {
-            first: 1,
-            prev: null,
-            next: null,
-            last: 1,
-            pages: 1,
-            items: 0,
-            data: [],
-        }
+        return { data: [], prev: null, next: null }
     }
 }
 
