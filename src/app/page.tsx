@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { getAllPosts } from '@/services/postService'
+import { SearchForm } from '@/components/SearchForm'
 import { CardPost } from '@/components/CardPost'
 import styles from './page.module.css'
 
@@ -15,6 +16,7 @@ const Home = async ({ searchParams }: HomeProps) => {
 
     return (
         <main className={styles.principal}>
+            <SearchForm />
             <section className={styles.posts}>
                 {posts.map(post => (
                     <CardPost key={post.id} post={post} />
