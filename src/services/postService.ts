@@ -1,25 +1,38 @@
-import html from 'remark-html'
-import db from '@prisma/db'
-import logger from '@/utils/logger'
+import { Prisma } from '@prisma/client'
 import { remark } from 'remark'
 import { redirect } from 'next/navigation'
 import { PaginatedPosts } from '@/types/PaginatedPosts'
 import { Post } from '@/types/Post'
+import html from 'remark-html'
+import db from '@prisma/db'
+import logger from '@/utils/logger'
 
-export async function getAllPosts(page: number): Promise<PaginatedPosts> {
+export async function getAllPosts(page: number, searchTerm: string): Promise<PaginatedPosts> {
     try {
+        const where: Prisma.PostWhereInput = {}
+
+        if (searchTerm) {
+            where.title = {
+                contains: searchTerm,
+                mode: 'insensitive',
+            }
+        }
+
         const perPage = 6
         const skip = (page - 1) * perPage
 
-        const totalItems = await db.post.count()
-        const totalPages = Math.ceil(totalItems / perPage)
+        const totalItems = await db.post.count({
+            where: where,
+        })
 
+        const totalPages = Math.ceil(totalItems / perPage)
         const prev = page > 1 ? page - 1 : null
         const next = page < totalPages ? page + 1 : null
 
         const posts = await db.post.findMany({
             take: perPage,
             skip: skip,
+            where: where,
             orderBy: { createdAt: 'desc' },
             include: {
                 author: true,
