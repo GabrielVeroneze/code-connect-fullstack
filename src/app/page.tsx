@@ -5,14 +5,14 @@ import { CardPost } from '@/components/CardPost'
 import styles from './page.module.css'
 
 interface HomeProps {
-    searchParams: Promise<{ page: string }>
+    searchParams: Promise<{ page: string; query: string }>
 }
 
 const Home = async ({ searchParams }: HomeProps) => {
-    const { page } = await searchParams
+    const { page, query } = await searchParams
     const currentPage = Number(page) || 1
 
-    const { data: posts, prev, next } = await getAllPosts(currentPage)
+    const { data: posts, prev, next } = await getAllPosts(currentPage, query)
 
     return (
         <main className={styles.principal}>
