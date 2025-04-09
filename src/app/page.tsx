@@ -24,12 +24,24 @@ const Home = async ({ searchParams }: HomeProps) => {
             </section>
             <nav className={styles.links}>
                 {prev && (
-                    <Link className={styles.link} href={`/?page=${prev}`}>
+                    <Link
+                        className={styles.link}
+                        href={{
+                            pathname: '/',
+                            query: { page: prev, query: query },
+                        }}
+                    >
                         Página anterior
                     </Link>
                 )}
                 {next && (
-                    <Link className={styles.link} href={`/?page=${next}`}>
+                    <Link
+                        className={styles.link}
+                        href={{
+                            pathname: '/',
+                            query: { page: next, query: query },
+                        }}
+                    >
                         Próxima página
                     </Link>
                 )}
