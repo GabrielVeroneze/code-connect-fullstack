@@ -4,7 +4,7 @@ import { redirect } from 'next/navigation'
 import { PaginatedPosts } from '@/types/PaginatedPosts'
 import { Post } from '@/types/Post'
 import html from 'remark-html'
-import db from '@prisma/db'
+import db from 'prisma/db'
 import logger from '@/utils/logger'
 
 export async function getAllPosts(page: number, searchTerm: string): Promise<PaginatedPosts> {
