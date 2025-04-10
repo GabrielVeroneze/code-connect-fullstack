@@ -117,7 +117,7 @@ async function main() {
     ]
 
     posts.forEach(async (post) => {
-        await db.post.upsert({
+        await prisma.post.upsert({
             where: { slug: post.slug },
             update: {},
             create: post,
@@ -129,10 +129,10 @@ async function main() {
 
 main()
     .then(async () => {
-        await db.$disconnect()
+        await prisma.$disconnect()
     })
     .catch(async (e) => {
         console.error(e)
-        await db.$disconnect()
+        await prisma.$disconnect()
         process.exit(1)
     })
