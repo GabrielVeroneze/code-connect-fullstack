@@ -1,4 +1,6 @@
-import db from 'prisma/db'
+import { PrismaClient } from '@prisma/client'
+
+const prisma = new PrismaClient()
 
 async function main() {
     const author = {
@@ -7,7 +9,7 @@ async function main() {
         avatar: 'https://raw.githubusercontent.com/viniciosneves/code-connect-assets/main/authors/anabeatriz_dev.png',
     }
 
-    const ana = await db.user.upsert({
+    const ana = await prisma.user.upsert({
         where: { username: author.username },
         update: {},
         create: author,
